@@ -39,6 +39,7 @@ public class GameController : MonoBehaviour
         }
     }
 
+    // Init deck
     public void GenerateDeck()
     {
         string[] suits = { "S", "C", "D", "H" };
@@ -51,6 +52,7 @@ public class GameController : MonoBehaviour
         }
     }
 
+    // Shuffle the deck
     public void Shuffle()
     {
 
