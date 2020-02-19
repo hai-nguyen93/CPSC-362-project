@@ -8,6 +8,7 @@ public class GameController : MonoBehaviour
     public int currentTopDeck = 0;
 
     public Sprite[] cardSprites;
+    public TableCards table;
 
     [Header("Players Hands")]
     public Hand player;
@@ -50,6 +51,7 @@ public class GameController : MonoBehaviour
                 deck.Add(s + v);
             }
         }
+        Shuffle();
     }
 
     // Shuffle the deck
@@ -66,5 +68,16 @@ public class GameController : MonoBehaviour
                 return cardSprites[i];
         }
         return null;
+    }
+
+    // Add card from deck to table
+    public void DealCard()
+    {
+        if (table.Size() < 5)
+        {
+            table.AddCard(deck[currentTopDeck]);
+            player.AddCardCopy(deck[currentTopDeck]);
+            ++currentTopDeck;
+        }
     }
 }

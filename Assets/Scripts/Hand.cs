@@ -8,12 +8,11 @@ public class Hand : MonoBehaviour
     public List<Card> cards;
     public Image card1;
     public Image card2;
-    int currentHandSize = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        currentHandSize = 0;
+        
     }
 
     // Update is called once per frame
@@ -22,20 +21,38 @@ public class Hand : MonoBehaviour
 
     }
 
+    // Add card to hand from deck
     public void AddCardToHand(string card)
     {
         Card c = new Card(card);
         c.sprite = FindObjectOfType<GameController>().GetCardSprite(c.name);
-        if (currentHandSize == 0)
+        if (cards.Count == 0)
         {
             card1.sprite = c.sprite;
             card1.enabled = true;
         }
-        if (currentHandSize == 1)
+        if (cards.Count == 1)
         {
             card2.sprite = c.sprite;
             card2.enabled = true;
         }
-        ++currentHandSize;
+        AddCard(c);
+    }
+
+    // Get a copy of a card from the table
+    public void AddCardCopy(string card)
+    {
+        AddCard(new Card(card));
+    }
+
+    // Add card to List<Card>
+    void AddCard(Card c)
+    {
+        cards.Add(c);      
+    }
+
+    public void CalculateHand()
+    {
+
     }
 }
