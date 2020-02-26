@@ -11,15 +11,19 @@ public class GameController : MonoBehaviour
     public TableCards table;
 
     [Header("Players Hands")]
-    public Hand player;
+    public Hand[] players;
+
+    ///////////////////////////
+    /// Game Functions
+    ///////////////////////////
 
     // Start is called before the first frame update
     void Start()
     {
         GenerateDeck();
-        player.AddCardToHand(deck[currentTopDeck]);
+        players[0].AddCardToHand(deck[currentTopDeck]);
         ++currentTopDeck;
-        player.AddCardToHand(deck[currentTopDeck]);
+        players[0].AddCardToHand(deck[currentTopDeck]);
         ++currentTopDeck;
     }
 
@@ -29,14 +33,6 @@ public class GameController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Debug.Log("aaaaa");
-        }
-    }
-
-    public void Print()
-    {
-        foreach (string c in deck)
-        {
-            Debug.Log(c);
         }
     }
 
@@ -57,7 +53,16 @@ public class GameController : MonoBehaviour
     // Shuffle the deck
     public void Shuffle()
     {
-
+        for (int i = 0; i < 52; ++i)
+        {
+            int j = Random.Range(0, 52);
+            if (i != j)
+            {
+                string temp = deck[i];
+                deck[i] = deck[j];
+                deck[j] = temp;
+            }
+        }
     }
 
     public Sprite GetCardSprite(string card)
@@ -73,11 +78,37 @@ public class GameController : MonoBehaviour
     // Add card from deck to table
     public void DealCard()
     {
-        if (table.Size() < 5)
+        if (table.Size() < 3)
+        {
+            for (int i = 0; i < 3; ++i)
+            {
+                table.AddCard(deck[currentTopDeck]);
+                players[0].AddCardCopy(deck[currentTopDeck]);
+                ++currentTopDeck;
+            }
+        }
+        else if (table.Size() < 5)
         {
             table.AddCard(deck[currentTopDeck]);
-            player.AddCardCopy(deck[currentTopDeck]);
+            players[0].AddCardCopy(deck[currentTopDeck]);
             ++currentTopDeck;
+        }
+    }
+
+    /////////////////////////////
+    /// Misc. functions
+    ////////////////////////////
+    public void Quit()
+    {
+        Debug.Log("Quit Game");
+        Application.Quit();
+    }
+    
+    public void Print()
+    {
+        foreach (string c in deck)
+        {
+            Debug.Log(c);
         }
     }
 }

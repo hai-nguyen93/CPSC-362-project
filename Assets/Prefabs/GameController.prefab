@@ -98,4 +98,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: a6898a37d88b36447af9dfb75f2570cb, type: 3}
   - {fileID: 21300000, guid: d984d51cecb5c154eb65e6c67f730df1, type: 3}
   - {fileID: 21300000, guid: 30e7f20bbb019af4a8599a461b8f1d3e, type: 3}
-  player: {fileID: 0}
+  table: {fileID: 0}
+  players:
+  - {fileID: 0}
