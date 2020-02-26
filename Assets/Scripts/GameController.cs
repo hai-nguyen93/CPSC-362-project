@@ -57,7 +57,16 @@ public class GameController : MonoBehaviour
     // Shuffle the deck
     public void Shuffle()
     {
-
+        for (int i = 0; i < 52; ++i)
+        {
+            int j = Random.Range(0, 52);
+            if (i != j)
+            {
+                string temp = deck[i];
+                deck[i] = deck[j];
+                deck[j] = temp;
+            }
+        }
     }
 
     public Sprite GetCardSprite(string card)
@@ -73,7 +82,16 @@ public class GameController : MonoBehaviour
     // Add card from deck to table
     public void DealCard()
     {
-        if (table.Size() < 5)
+        if (table.Size() < 3)
+        {
+            for (int i = 0; i < 3; ++i)
+            {
+                table.AddCard(deck[currentTopDeck]);
+                player.AddCardCopy(deck[currentTopDeck]);
+                ++currentTopDeck;
+            }
+        }
+        else if (table.Size() < 5)
         {
             table.AddCard(deck[currentTopDeck]);
             player.AddCardCopy(deck[currentTopDeck]);
