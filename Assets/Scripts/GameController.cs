@@ -13,6 +13,10 @@ public class GameController : MonoBehaviour
     [Header("Players Hands")]
     public Hand player;
 
+    ///////////////////////////
+    /// Game Functions
+    ///////////////////////////
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,14 +33,6 @@ public class GameController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Debug.Log("aaaaa");
-        }
-    }
-
-    public void Print()
-    {
-        foreach (string c in deck)
-        {
-            Debug.Log(c);
         }
     }
 
@@ -96,6 +92,23 @@ public class GameController : MonoBehaviour
             table.AddCard(deck[currentTopDeck]);
             player.AddCardCopy(deck[currentTopDeck]);
             ++currentTopDeck;
+        }
+    }
+
+    /////////////////////////////
+    /// Misc. functions
+    ////////////////////////////
+    public void Quit()
+    {
+        Debug.Log("Quit Game");
+        Application.Quit();
+    }
+    
+    public void Print()
+    {
+        foreach (string c in deck)
+        {
+            Debug.Log(c);
         }
     }
 }
