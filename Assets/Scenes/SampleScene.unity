@@ -1822,14 +1822,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3773337016773180429, guid: 35608b94dcbc7e84c84f01159d0b3ff1,
         type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 883478056}
-    - target: {fileID: 3773337016773180429, guid: 35608b94dcbc7e84c84f01159d0b3ff1,
-        type: 3}
       propertyPath: table
       value: 
       objectReference: {fileID: 9148754349987976278}
+    - target: {fileID: 3773337016773180429, guid: 35608b94dcbc7e84c84f01159d0b3ff1,
+        type: 3}
+      propertyPath: players.Array.data[0]
+      value: 
+      objectReference: {fileID: 883478056}
     - target: {fileID: 3773337016773180418, guid: 35608b94dcbc7e84c84f01159d0b3ff1,
         type: 3}
       propertyPath: m_LocalPosition.x

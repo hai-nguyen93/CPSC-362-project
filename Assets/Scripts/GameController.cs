@@ -11,7 +11,7 @@ public class GameController : MonoBehaviour
     public TableCards table;
 
     [Header("Players Hands")]
-    public Hand player;
+    public Hand[] players;
 
     ///////////////////////////
     /// Game Functions
@@ -21,9 +21,9 @@ public class GameController : MonoBehaviour
     void Start()
     {
         GenerateDeck();
-        player.AddCardToHand(deck[currentTopDeck]);
+        players[0].AddCardToHand(deck[currentTopDeck]);
         ++currentTopDeck;
-        player.AddCardToHand(deck[currentTopDeck]);
+        players[0].AddCardToHand(deck[currentTopDeck]);
         ++currentTopDeck;
     }
 
@@ -83,14 +83,14 @@ public class GameController : MonoBehaviour
             for (int i = 0; i < 3; ++i)
             {
                 table.AddCard(deck[currentTopDeck]);
-                player.AddCardCopy(deck[currentTopDeck]);
+                players[0].AddCardCopy(deck[currentTopDeck]);
                 ++currentTopDeck;
             }
         }
         else if (table.Size() < 5)
         {
             table.AddCard(deck[currentTopDeck]);
-            player.AddCardCopy(deck[currentTopDeck]);
+            players[0].AddCardCopy(deck[currentTopDeck]);
             ++currentTopDeck;
         }
     }
