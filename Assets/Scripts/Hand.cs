@@ -10,6 +10,7 @@ public class Hand : MonoBehaviour
     public List<Card> cards;
     public Image card1;
     public Image card2;
+    public HandType playerHand;
 
     // Start is called before the first frame update
     void Start()
@@ -53,10 +54,28 @@ public class Hand : MonoBehaviour
         cards.Add(c);      
     }
 
-    public void CalculateHand()
+    public HandType CalculateHand()
     {
-       
+        sortHand();
+        if (isRoyalFlush())
+            return HandType.RoyalFlush;
     }
+
+    public bool isRoyalFlush()
+    {
+        for (int i = 0; i <= cards.Count - 4; ++i) {
+            if (cards[0 + i].GetValue() == 14 && cards[1+i].GetValue() == 13 && cards[2+i].GetValue() == 12
+                && cards[3+i].GetValue() == 11 && cards[4+i].GetValue() == 10 && cards[0+i].GetSuit() == cards[1+i].GetSuit()
+                && cards[0+i].GetSuit() == cards[2+i].GetSuit() && cards[0+i].GetSuit() == cards[3+i].GetSuit() &&
+                cards[0+i].GetSuit() == cards[4+i].GetSuit())
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 
     public void sortHand()
     {
@@ -65,7 +84,7 @@ public class Hand : MonoBehaviour
         {
             for(int j = i+1; j < cards.Count; j++)
             {
-                if (cards[i].compareCard(cards[j]) <= 0)
+                if (cards[i].CompareCard(cards[j]) <= 0)
                 {
                     temp = cards[i];
                     cards[i] = cards[j];
