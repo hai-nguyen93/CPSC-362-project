@@ -104,11 +104,20 @@ public class GameController : MonoBehaviour
         Application.Quit();
     }
     
+    
+    //////////////////////////////
+    /// Functions for testing
+    ////////////////////////////////
     public void Print()
     {
         foreach (string c in deck)
         {
             Debug.Log(c);
         }
+    }
+
+    public void PrintHandType()
+    {
+        Debug.Log(players[0].CalculateHand());
     }
 }

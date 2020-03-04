@@ -916,7 +916,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 708609456}
-        m_MethodName: DealCard
+        m_MethodName: PrintHandType
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

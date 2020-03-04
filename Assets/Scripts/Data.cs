@@ -61,7 +61,7 @@ public class Card
         return Suit.Error;
     }
 
-    public int compareCard(Card c)
+    public int CompareCard(Card c)
     {
         if(this.GetValue() > c.GetValue())
         {
