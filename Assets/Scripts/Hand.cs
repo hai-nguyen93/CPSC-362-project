@@ -63,6 +63,7 @@ public class Hand : MonoBehaviour
         {
             return HandType.StraightFlush;
         }
+        return HandType.HighCard;
     }
 
     public bool isRoyalFlush()
@@ -102,7 +103,7 @@ public class Hand : MonoBehaviour
         {
             for(int j = i+1; j < cards.Count; j++)
             {
-                if (cards[i].CompareCard(cards[j]) <= 0)
+                if (cards[i].CompareCard(cards[j])<= 0)
                 {
                     temp = cards[i];
                     cards[i] = cards[j];
