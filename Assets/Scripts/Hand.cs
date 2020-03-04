@@ -59,6 +59,10 @@ public class Hand : MonoBehaviour
         sortHand();
         if (isRoyalFlush())
             return HandType.RoyalFlush;
+        if(isStraightFlush())
+        {
+            return HandType.StraightFlush;
+        }
     }
 
     public bool isRoyalFlush()
@@ -75,6 +79,20 @@ public class Hand : MonoBehaviour
         return false;
     }
 
+    public bool isStraightFlush()
+    {
+        for(int i = 0; i <= cards.Count - 4; ++i)
+        {
+            if(cards[0 + i].GetValue() == cards[1 + i].GetValue() + 1 && cards[1 + i].GetValue() == cards[2 + i].GetValue() + 1 && cards[2 + i].GetValue() ==
+                cards[3 + i].GetValue() + 1 && cards[3 + i].GetValue() == cards[4 + i].GetValue() + 1 && cards[0 + i].GetSuit() == cards[1 + i].GetSuit()
+                && cards[0 + i].GetSuit() == cards[2 + i].GetSuit() && cards[0 + i].GetSuit() == cards[3 + i].GetSuit() &&
+                cards[0 + i].GetSuit() == cards[4 + i].GetSuit())
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
 
     public void sortHand()
