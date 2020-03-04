@@ -55,6 +55,23 @@ public class Hand : MonoBehaviour
 
     public void CalculateHand()
     {
-       //sss
+       
+    }
+
+    public void sortHand()
+    {
+        Card temp;
+        for(int i = 0; i < cards.Count; i++)
+        {
+            for(int j = i+1; j < cards.Count; j++)
+            {
+                if (cards[i].compareCard(cards[j]) <= 0)
+                {
+                    temp = cards[i];
+                    cards[i] = cards[j];
+                    cards[j] = temp;
+                }
+            }
+        }
     }
 }

@@ -60,6 +60,24 @@ public class Card
 
         return Suit.Error;
     }
+
+    public int compareCard(Card c)
+    {
+        if(this.GetValue() > c.GetValue())
+        {
+            return 1;
+        }
+        else if(this.GetValue() == c.GetValue())
+        {
+            if(this.GetSuit() > c.GetSuit())
+                return 1;
+            else if(this.GetSuit() < c.GetSuit())
+                return -1;
+            return 0;  
+        }
+        else
+            return -1;
+    }
 }
 
 
