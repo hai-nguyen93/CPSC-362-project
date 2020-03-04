@@ -1629,8 +1629,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 708609456}
-        m_MethodName: DealCard
+      - m_Target: {fileID: 883478056}
+        m_MethodName: sortHand
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
