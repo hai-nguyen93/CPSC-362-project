@@ -11,11 +11,12 @@ public class Hand : MonoBehaviour
     public Image card1;
     public Image card2;
     public HandType playerHand;
+    public Text handTypeText;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        handTypeText.enabled = false;
     }
 
     // Update is called once per frame
@@ -51,7 +52,10 @@ public class Hand : MonoBehaviour
     // Add card to List<Card>
     void AddCard(Card c)
     {
-        cards.Add(c);      
+        cards.Add(c);
+        playerHand = CalculateHand();
+        handTypeText.text = playerHand.ToString();
+        handTypeText.enabled = true;
     }
 
     public HandType CalculateHand()
@@ -59,16 +63,29 @@ public class Hand : MonoBehaviour
         sortHand();
         if (isRoyalFlush())
             return HandType.RoyalFlush;
-        if(isStraightFlush())
-        {
+        else if (isStraightFlush())
             return HandType.StraightFlush;
-        }
-        return HandType.HighCard;
+        else if (isFourOfAKind())
+            return HandType.FourOfAKind;
+        else if (isFullHouse())
+            return HandType.FullHouse;
+        else if (isFlush())
+            return HandType.Flush;
+        else if (isStraight())
+            return HandType.Straight;
+        else if (isThreeOfAKind())
+            return HandType.ThreeOfAKind;
+        else if (isTwoPair())
+            return HandType.TwoPairs;
+        else if (isPair())
+            return HandType.Pair;
+        else
+            return HandType.HighCard;
     }
 
     public bool isRoyalFlush()
     {
-        for (int i = 0; i <= cards.Count - 4; ++i) {
+        for (int i = 0; i <= cards.Count - 5; ++i) {
             if (cards[0 + i].GetValue() == 14 && cards[1+i].GetValue() == 13 && cards[2+i].GetValue() == 12
                 && cards[3+i].GetValue() == 11 && cards[4+i].GetValue() == 10 && cards[0+i].GetSuit() == cards[1+i].GetSuit()
                 && cards[0+i].GetSuit() == cards[2+i].GetSuit() && cards[0+i].GetSuit() == cards[3+i].GetSuit() &&
@@ -88,6 +105,116 @@ public class Hand : MonoBehaviour
                 cards[3 + i].GetValue() + 1 && cards[3 + i].GetValue() == cards[4 + i].GetValue() + 1 && cards[0 + i].GetSuit() == cards[1 + i].GetSuit()
                 && cards[0 + i].GetSuit() == cards[2 + i].GetSuit() && cards[0 + i].GetSuit() == cards[3 + i].GetSuit() &&
                 cards[0 + i].GetSuit() == cards[4 + i].GetSuit())
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool isFourOfAKind()
+    {
+        for (int i = 0; i <= cards.Count - 4; ++i)
+        {
+            if (cards[0 + i].GetValue() == cards[1 + i].GetValue() && cards[1 + i].GetValue() == cards[2 + i].GetValue() &&
+                cards[2 + i].GetValue() == cards[3 + i].GetValue())
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool isFullHouse()
+    {
+        if (cards.Count < 8) return false;
+
+        int counter1 = 0; // for 3 of a kind
+        int counter2 = 0; // for pair
+        for (int i = 0; i <= cards.Count - 2; ++i)
+        {
+            Debug.Log(i);
+            if(counter1== 0 && cards[0 + i].GetValue() == cards[1 + i].GetValue() && cards[1 + i].GetValue() == cards[2 + i].GetValue())
+            {
+                counter1++;
+                i += 2;
+                continue;
+            }
+            if(cards[0 + i].GetValue() == cards[1 + i].GetValue())
+            {
+                counter2++;
+            }
+        }
+        if (counter1 == 1 && counter2 > 0)
+            return true;
+        return false;
+    }
+
+    public bool isFlush()
+    {
+        for (int i = 0; i <= cards.Count - 5; ++i)
+        {
+           // Suit currentSuit = cards[i].GetSuit();
+            int counter = 0;
+            for(int j = i+1; j <= cards.Count - 1; j++)
+            {
+                if (cards[j].GetSuit() == cards[i].GetSuit())
+                    counter++;
+            }
+            if(counter >= 4) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public bool isStraight()
+    {
+        for(int i = 0; i <=cards.Count - 4; ++i)
+        {
+            if(cards[0 + i].GetValue() == cards[1 + i].GetValue() + 1 && cards[1 + i].GetValue() == cards[2 + i].GetValue() + 1 && cards[2 + i].GetValue() ==
+                cards[3 + i].GetValue() + 1 && cards[3 + i].GetValue() == cards[4 + i].GetValue() + 1)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool isThreeOfAKind()
+    {
+        for (int i = 0; i <= cards.Count - 3; ++i)
+        {
+            if(cards[0 + i].GetValue() == cards[1 + i].GetValue() && cards[1 + i].GetValue() == cards[2 + i].GetValue())
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool isTwoPair()
+    {
+        int counter = 0;
+        for (int i = 0; i <= cards.Count - 2; i++)
+        {
+            if(cards[i].GetValue() == cards[i+1].GetValue())
+            {
+                counter++;
+            }
+        }
+        if (counter == 2)
+            return true;
+        else
+            return false;
+    }
+
+    public bool isPair()
+    {
+        for(int i = 0; i <= cards.Count - 2; ++i)
+        {
+            if(cards[i].GetValue() == cards[1+i].GetValue())
             {
                 return true;
             }
