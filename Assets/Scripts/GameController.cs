@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
+    public GameObject menuPanel;
+
     public List<string> deck;
     public int currentTopDeck = 0;
 
@@ -20,6 +23,7 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        HideMenu();
         GenerateDeck();
         players[0].AddCardToHand(deck[currentTopDeck]);
         ++currentTopDeck;
@@ -102,6 +106,21 @@ public class GameController : MonoBehaviour
     {
         Debug.Log("Quit Game");
         Application.Quit();
+    }
+
+    public void ReturnToTitle()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void ShowMenu()
+    {
+        menuPanel.SetActive(true);
+    }
+
+    public void HideMenu()
+    {
+        menuPanel.SetActive(false);
     }
     
     

@@ -404,6 +404,8 @@ MonoBehaviour:
   cards: []
   card1: {fileID: 4875727159489108937}
   card2: {fileID: 4875727158839515186}
+  handTypeText: {fileID: 6483130326168623399}
+  playerHand: 0
 --- !u!1 &8347434910694443922
 GameObject:
   m_ObjectHideFlags: 0
