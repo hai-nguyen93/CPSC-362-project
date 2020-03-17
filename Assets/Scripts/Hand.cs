@@ -53,6 +53,11 @@ public class Hand : MonoBehaviour
     void AddCard(Card c)
     {
         cards.Add(c);
+        CheckHand();  
+    }
+
+    public void CheckHand()
+    {
         playerHand = CalculateHand();
         handTypeText.text = playerHand.ToString();
         handTypeText.enabled = true;
@@ -99,7 +104,7 @@ public class Hand : MonoBehaviour
 
     public bool isStraightFlush()
     {
-        for(int i = 0; i <= cards.Count - 4; ++i)
+        for(int i = 0; i <= cards.Count - 5; ++i)
         {
             if(cards[0 + i].GetValue() == cards[1 + i].GetValue() + 1 && cards[1 + i].GetValue() == cards[2 + i].GetValue() + 1 && cards[2 + i].GetValue() ==
                 cards[3 + i].GetValue() + 1 && cards[3 + i].GetValue() == cards[4 + i].GetValue() + 1 && cards[0 + i].GetSuit() == cards[1 + i].GetSuit()
@@ -127,25 +132,32 @@ public class Hand : MonoBehaviour
 
     public bool isFullHouse()
     {
-        if (cards.Count < 8) return false;
+        if (cards.Count < 5) return false;
 
-        int counter1 = 0; // for 3 of a kind
-        int counter2 = 0; // for pair
-        for (int i = 0; i <= cards.Count - 2; ++i)
+        bool has3OfAKind = false;
+        int tempValue = -1;
+        bool hasPair = false;
+
+        // Look for a Three of a kind
+        for (int i = 0; i <= cards.Count - 3; ++i)
         {
-            Debug.Log(i);
-            if(counter1== 0 && cards[0 + i].GetValue() == cards[1 + i].GetValue() && cards[1 + i].GetValue() == cards[2 + i].GetValue())
+            if (cards[0 + i].GetValue() == cards[1 + i].GetValue() && cards[1 + i].GetValue() == cards[2 + i].GetValue())
             {
-                counter1++;
-                i += 2;
-                continue;
-            }
-            if(cards[0 + i].GetValue() == cards[1 + i].GetValue())
-            {
-                counter2++;
+                has3OfAKind = true;
+                tempValue = cards[i].GetValue();
             }
         }
-        if (counter1 == 1 && counter2 > 0)
+
+        // Look for a pair, different value from Three of a kind
+        for (int i = 0; i <= cards.Count - 2; ++i)
+        {
+            if (cards[i].GetValue() == cards[1 + i].GetValue() && cards[i].GetValue() != tempValue)
+            {
+                hasPair = true;
+            }
+        }
+
+        if (has3OfAKind && hasPair)
             return true;
         return false;
     }

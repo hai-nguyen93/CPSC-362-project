@@ -137,6 +137,7 @@ public class GameController : MonoBehaviour
 
     public void PrintHandType()
     {
-        Debug.Log(players[0].CalculateHand());
+        players[0].CheckHand();
+        Debug.Log(players[0].playerHand);   
     }
 }
