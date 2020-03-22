@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public enum GameState { Start, PlayerTurn, AITurn, Evaluating, End};
+
 public class GameController : MonoBehaviour
 {
     public GameObject menuPanel;
@@ -16,6 +18,9 @@ public class GameController : MonoBehaviour
     [Header("Players Hands")]
     public Hand[] players;
 
+    //[HideInInspector]
+    public GameState gState = GameState.Start;
+
     ///////////////////////////
     /// Game Functions
     ///////////////////////////
@@ -23,20 +28,41 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        ChangeState(GameState.Start);
         HideMenu();
-        GenerateDeck();
-        players[0].AddCardToHand(deck[currentTopDeck]);
-        ++currentTopDeck;
-        players[0].AddCardToHand(deck[currentTopDeck]);
-        ++currentTopDeck;
+        GenerateDeck();    
     }
 
     // Update is called once per frame
     void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
+    {      
+        // Processing game's state
+        switch (gState)
         {
-            Debug.Log("aaaaa");
+            case GameState.Start:
+                StartGame();
+                //gState = GameState.AITurn;    
+                ChangeState(GameState.AITurn);
+                break;
+
+            case GameState.PlayerTurn:
+                //Debug.Log("waiting for player action");
+                break;
+
+            case GameState.AITurn:
+                // testing, will update later             
+                ChangeState((table.Size() < 5) ? GameState.PlayerTurn : GameState.Evaluating);              
+                break;
+
+            case GameState.Evaluating:
+                // testing, will update later
+                //gState = GameState.End; 
+                ChangeState(GameState.End);
+                break;
+
+            case GameState.End:
+                //Debug.Log("Game Ended.");
+                break;
         }
     }
 
@@ -99,6 +125,15 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public void StartGame()
+    {
+        // will update later
+        players[0].AddCardToHand(deck[currentTopDeck]);
+        ++currentTopDeck;
+        players[0].AddCardToHand(deck[currentTopDeck]);
+        ++currentTopDeck;
+    }
+
     /////////////////////////////
     /// Misc. functions
     ////////////////////////////
@@ -122,8 +157,29 @@ public class GameController : MonoBehaviour
     {
         menuPanel.SetActive(false);
     }
-    
-    
+
+    public void EndPlayerTurn()
+    {
+        // testing, will update later        
+        if (table.Size() < 5)
+        {
+            DealCard();
+            //gState = GameState.AITurn;
+            ChangeState(GameState.AITurn);
+        }
+        else
+        {
+            //gState = GameState.Evaluating;
+            ChangeState(GameState.Evaluating);
+        }
+    }
+
+    public void ChangeState(GameState state)
+    {
+        gState = state;
+        Debug.Log("Current state: " + gState);
+    }
+
     //////////////////////////////
     /// Functions for testing
     ////////////////////////////////

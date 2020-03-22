@@ -914,8 +914,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 708609456}
-        m_MethodName: PrintHandType
+      - m_Target: {fileID: 1874076428}
+        m_MethodName: PlayerCall
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1060,7 +1060,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 4875727159217622095}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1874076427}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5a4c9a08adc14c64385c83b65d1964b0, type: 3}
@@ -2063,8 +2063,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 883478056}
-        m_MethodName: sortHand
+      - m_Target: {fileID: 1874076428}
+        m_MethodName: PlayerFold
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2561,8 +2561,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 708609456}
-        m_MethodName: DealCard
+      - m_Target: {fileID: 1874076428}
+        m_MethodName: PlayerRaise
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2612,6 +2612,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1873320781}
   m_CullTransparentMesh: 0
+--- !u!1 &1874076427 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4875727160080122473, guid: 79155cab6b71d6b458abd88864d8117a,
+    type: 3}
+  m_PrefabInstance: {fileID: 4875727159217622095}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1874076428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874076427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99489b5a6fc85694d886366dd0cd86cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hand: {fileID: 0}
+  gc: {fileID: 0}
 --- !u!1001 &3773337016648905178
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3026,7 +3046,7 @@ PrefabInstance:
     - target: {fileID: 4768383859881139309, guid: 2d66b28a1e862994cac6c7e4c2df6114,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8074336120664292485, guid: 2d66b28a1e862994cac6c7e4c2df6114,
         type: 3}
@@ -3047,6 +3067,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ChildForceExpandWidth
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4768383859881139311, guid: 2d66b28a1e862994cac6c7e4c2df6114,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d66b28a1e862994cac6c7e4c2df6114, type: 3}
@@ -3166,6 +3191,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8347434910694443922, guid: 79155cab6b71d6b458abd88864d8117a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4875727159489108939, guid: 79155cab6b71d6b458abd88864d8117a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4875727159489108937, guid: 79155cab6b71d6b458abd88864d8117a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6483130326168623399, guid: 79155cab6b71d6b458abd88864d8117a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6483130326168623399, guid: 79155cab6b71d6b458abd88864d8117a,
+        type: 3}
+      propertyPath: m_Text
+      value: Hand Type
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 79155cab6b71d6b458abd88864d8117a, type: 3}

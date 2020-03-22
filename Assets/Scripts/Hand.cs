@@ -12,11 +12,13 @@ public class Hand : MonoBehaviour
     public Image card2;
     public HandType playerHand;
     public Text handTypeText;
+    public int bank;
 
     // Start is called before the first frame update
     void Start()
     {
         handTypeText.enabled = false;
+        bank = 10000;
     }
 
     // Update is called once per frame
@@ -250,5 +252,27 @@ public class Hand : MonoBehaviour
                 }
             }
         }
+    }
+
+    ///////////////////
+    ///Hand Action
+    //////////////////
+    
+    public void Call()
+    {
+        Debug.Log("Call");
+        // do something
+    }
+
+    public void Fold()
+    {
+        Debug.Log("Fold");
+        // do something
+    }
+
+    public void Raise()
+    {
+        Debug.Log("Raise");
+        // do something
     }
 }
