@@ -13,6 +13,8 @@ public class Hand : MonoBehaviour
     public HandType playerHand;
     public Text handTypeText;
     public int bank;
+    public int lastBet; //last amount bet
+    protected bool canBet = true;
 
     // Start is called before the first frame update
     void Start()
@@ -260,19 +262,44 @@ public class Hand : MonoBehaviour
     
     public void Call()
     {
+        //grab last amount bet in, add to bank.
+        bank = lastBet + bank;
         Debug.Log("Call");
         // do something
     }
 
     public void Fold()
     {
+        //skip turn of current player
+        FindObjectOfType<GameController>().EndPlayerTurn();
+        // after this statement, remove player/cards from hand, will add later.
         Debug.Log("Fold");
         // do something
     }
 
     public void Raise()
     {
+        //need to implement input from user for amount to raise, add later.
+        int raise = 0;
+        //set lastBet equal to amount raised.
+        if(raise < lastBet)
+        {
+            //tell user to input bet greater than last bet placed in.
+        }
+        else
+        {
+            lastBet = raise;
+            int raiseAmount = raise + bank;
+        }
         Debug.Log("Raise");
         // do something
+    }
+
+    public void Check()
+    {
+        //set betting for current player to false, end turn
+        canBet = false;
+        FindObjectOfType<GameController>().EndPlayerTurn();
+        Debug.Log("Check");
     }
 }
