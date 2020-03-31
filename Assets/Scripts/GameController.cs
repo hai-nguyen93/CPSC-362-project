@@ -18,6 +18,8 @@ public class GameController : MonoBehaviour
     [Header("Players Hands")]
     public Hand[] players;
 
+    public int blinds = 50;
+
     //[HideInInspector]
     public GameState gState = GameState.Start;
 

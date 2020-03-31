@@ -47,6 +47,7 @@ public class PlayerController : MonoBehaviour
         if (gc.gState == GameState.PlayerTurn)
         {
             Debug.Log("Player Raise");
+
             hand.Raise();
             // do something
             gc.EndPlayerTurn();
