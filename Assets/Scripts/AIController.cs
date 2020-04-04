@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CPUController : MonoBehaviour
+public class AIController : MonoBehaviour
 {
     Hand hand;
     GameController gc;

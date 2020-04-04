@@ -130,10 +130,20 @@ public class GameController : MonoBehaviour
     public void StartGame()
     {
         // will update later
-        players[0].AddCardToHand(deck[currentTopDeck]);
-        ++currentTopDeck;
-        players[0].AddCardToHand(deck[currentTopDeck]);
-        ++currentTopDeck;
+        for (int i = 0; i <=1; ++i)
+        {
+            foreach (Hand h in players)
+            {
+                h.AddCardToHand(deck[currentTopDeck]);
+                ++currentTopDeck;
+            }
+
+        }
+
+        //players[0].AddCardToHand(deck[currentTopDeck]);
+        //++currentTopDeck;
+        //players[0].AddCardToHand(deck[currentTopDeck]);
+        //++currentTopDeck;
     }
 
     /////////////////////////////
