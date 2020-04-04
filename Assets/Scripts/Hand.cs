@@ -277,19 +277,21 @@ public class Hand : MonoBehaviour
         // do something
     }
 
-    public void Raise()
+    public void Raise(int raiseAmount)
     {
         //need to implement input from user for amount to raise, add later.
-        int raise = 0;
+        //(Luc commented this out) int raise = 0;
         //set lastBet equal to amount raised.
-        if(raise < lastBet)
+        if(raiseAmount < lastBet)
         {
             //tell user to input bet greater than last bet placed in.
         }
         else
         {
-            lastBet = raise;
-            int raiseAmount = raise + bank;
+            lastBet = raiseAmount;
+            bank -= raiseAmount;
+            //(Luc commented this out) int raiseAmount = raise + bank;
+            //Luc : raiseAmount will be sent from playerController. For AI you can just random generate a reasonable bet 
         }
         Debug.Log("Raise");
         // do something

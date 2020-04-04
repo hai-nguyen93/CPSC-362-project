@@ -120,6 +120,85 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &10774302
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 10774303}
+  - component: {fileID: 10774305}
+  - component: {fileID: 10774304}
+  m_Layer: 5
+  m_Name: RaiseAmount
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &10774303
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 10774302}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1873320782}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -122, y: 32}
+  m_SizeDelta: {x: 160, y: 30}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &10774304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 10774302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 3
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'Amount: $0'
+--- !u!222 &10774305
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 10774302}
+  m_CullTransparentMesh: 0
 --- !u!1 &61279520
 GameObject:
   m_ObjectHideFlags: 0
@@ -919,7 +998,7 @@ GameObject:
   - component: {fileID: 554586956}
   - component: {fileID: 554586955}
   m_Layer: 5
-  m_Name: TotalBet
+  m_Name: Pot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -941,8 +1020,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 389.7, y: -7}
-  m_SizeDelta: {x: -1055.1, y: -666.8}
+  m_AnchoredPosition: {x: 427.5, y: -6.100006}
+  m_SizeDelta: {x: -979.4, y: -668.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &554586955
 MonoBehaviour:
@@ -977,7 +1056,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Total: $100'
+  m_Text: 'Pot Total: $0'
 --- !u!222 &554586956
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1996,7 +2075,18 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1874076428}
+        m_MethodName: sliderUpdate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Slider+SliderEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1110032897
@@ -2011,10 +2101,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99489b5a6fc85694d886366dd0cd86cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slide: {fileID: 0}
+  slideObject: {fileID: 0}
   confirm: {fileID: 0}
   disableCall: {fileID: 0}
   disableFold: {fileID: 0}
+  raiseAmountText: {fileID: 0}
+  potText: {fileID: 0}
+  playerBankText: {fileID: 0}
 --- !u!1 &1193964360
 GameObject:
   m_ObjectHideFlags: 0
@@ -3213,6 +3306,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1777650564}
   m_CullTransparentMesh: 0
+--- !u!1 &1801584303 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 878975573, guid: 79155cab6b71d6b458abd88864d8117a,
+    type: 3}
+  m_PrefabInstance: {fileID: 4875727159217622095}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1855134307
 GameObject:
   m_ObjectHideFlags: 0
@@ -3379,6 +3478,7 @@ RectTransform:
   - {fileID: 1110032894}
   - {fileID: 826153171}
   - {fileID: 126463657}
+  - {fileID: 10774303}
   m_Father: {fileID: 509408949}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3510,10 +3610,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99489b5a6fc85694d886366dd0cd86cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slide: {fileID: 1110032893}
-  confirm: {fileID: 0}
+  slideObject: {fileID: 1110032893}
+  confirm: {fileID: 126463656}
   disableCall: {fileID: 842785088}
   disableFold: {fileID: 1595959023}
+  raiseAmountText: {fileID: 10774302}
+  potText: {fileID: 554586953}
+  playerBankText: {fileID: 1801584303}
 --- !u!1001 &3773337016648905178
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4098,6 +4201,10 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Text
       value: Hand Type
+      objectReference: {fileID: 0}
+    - target: {fileID: 878975575, guid: 79155cab6b71d6b458abd88864d8117a, type: 3}
+      propertyPath: m_Text
+      value: $
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 79155cab6b71d6b458abd88864d8117a, type: 3}
