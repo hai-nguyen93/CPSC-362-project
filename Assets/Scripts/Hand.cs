@@ -13,14 +13,19 @@ public class Hand : MonoBehaviour
     public HandType playerHand;
     public Text handTypeText;
     public int bank;
+    public GameObject playerBankText;
     public int lastBet; //last amount bet
     protected bool canBet = true;
+
+    GameController gc;
 
     // Start is called before the first frame update
     void Start()
     {
+        gc = FindObjectOfType<GameController>();
         handTypeText.enabled = false;
         bank = 10000;
+        UpdateBank(0);
     }
 
     // Update is called once per frame
@@ -33,7 +38,7 @@ public class Hand : MonoBehaviour
     public void AddCardToHand(string card)
     {
         Card c = new Card(card);
-        c.sprite = FindObjectOfType<GameController>().GetCardSprite(c.name);
+        c.sprite = gc.GetCardSprite(c.name);
         if (cards.Count == 0)
         {
             card1.sprite = c.sprite;
@@ -187,7 +192,7 @@ public class Hand : MonoBehaviour
 
     public bool isStraight()
     {
-        for(int i = 0; i <=cards.Count - 4; ++i)
+        for(int i = 0; i <=cards.Count - 5; ++i)
         {
             if(cards[0 + i].GetValue() == cards[1 + i].GetValue() + 1 && cards[1 + i].GetValue() == cards[2 + i].GetValue() + 1 && cards[2 + i].GetValue() ==
                 cards[3 + i].GetValue() + 1 && cards[3 + i].GetValue() == cards[4 + i].GetValue() + 1)
@@ -263,7 +268,7 @@ public class Hand : MonoBehaviour
     public void Call()
     {
         //grab last amount bet in, add to bank.
-        bank = lastBet + bank;
+        //bank = lastBet + bank;
         Debug.Log("Call");
         // do something
     }
@@ -271,7 +276,7 @@ public class Hand : MonoBehaviour
     public void Fold()
     {
         //skip turn of current player
-        FindObjectOfType<GameController>().EndPlayerTurn();
+        gc.EndPlayerTurn();
         // after this statement, remove player/cards from hand, will add later.
         Debug.Log("Fold");
         // do something
@@ -289,9 +294,12 @@ public class Hand : MonoBehaviour
         else
         {
             lastBet = raiseAmount;
-            bank -= raiseAmount;
+            UpdateBank(-raiseAmount);
             //(Luc commented this out) int raiseAmount = raise + bank;
             //Luc : raiseAmount will be sent from playerController. For AI you can just random generate a reasonable bet 
+
+            // add $ to potTotal
+            gc.UpdatePot(raiseAmount);
         }
         Debug.Log("Raise");
         // do something
@@ -301,7 +309,14 @@ public class Hand : MonoBehaviour
     {
         //set betting for current player to false, end turn
         canBet = false;
-        FindObjectOfType<GameController>().EndPlayerTurn();
+        gc.EndPlayerTurn();
         Debug.Log("Check");
+    }
+
+    // change bank amount, positive int for increase, negative int for decrease
+    public void UpdateBank(int amount)
+    {
+        bank += amount;
+        playerBankText.GetComponent<Text>().text = "$" + bank;
     }
 }

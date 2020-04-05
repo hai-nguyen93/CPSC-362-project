@@ -14,11 +14,12 @@ public class PlayerController : MonoBehaviour
     public GameObject disableFold;
     public GameObject raiseAmountText;
     int raiseAmount;
-    public GameObject potText;
-    public GameObject playerBankText;
+
+    //public GameObject potText;
+    //public GameObject playerBankText;
     //pot and player bank eventually accessed from other class/script. placeholders for now.
-    int playerBank;
-    int pot;
+    //int playerBank;
+    //int pot;
 
     // Start is called before the first frame update
     void Start()
@@ -30,10 +31,9 @@ public class PlayerController : MonoBehaviour
         slider.maxValue = 10000; // to be set to whatever current players bank is
         confirm.SetActive(false);
         raiseAmountText.SetActive(false);
-        playerBank = 10000;
-        playerBankText.GetComponent<Text>().text = "$" + playerBank;
-        pot = 0;
-        potText.GetComponent<Text>().text = "$" + pot;
+
+        //playerBank = 10000;
+        //playerBankText.GetComponent<Text>().text = "$" + playerBank;          
     }
 
     // Update is called once per frame
@@ -120,14 +120,7 @@ public class PlayerController : MonoBehaviour
                 disableCall.SetActive(true);
                 slideObject.SetActive(false);
                 confirm.SetActive(false);
-                raiseAmountText.SetActive(false);
-
-                //update bank and pot after raise
-                playerBank -= raiseAmount;
-                playerBankText.GetComponent<Text>().text = "$" + playerBank;
-                pot += raiseAmount;
-                potText.GetComponent<Text>().text = "$" + pot;
-
+                raiseAmountText.SetActive(false);                          
 
                 hand.Raise(raiseAmount);
                 // do something

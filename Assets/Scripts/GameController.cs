@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-public enum GameState { Start, PlayerTurn, AITurn, Evaluating, End};
+public enum GameState { Start, PlayerTurn, AITurn, Showdown, End};
 
 public class GameController : MonoBehaviour
 {
@@ -19,6 +20,9 @@ public class GameController : MonoBehaviour
     public Hand[] players;
 
     public int blinds = 50;
+    public int potTotal = 0;
+
+    public GameObject potText;
 
     //[HideInInspector]
     public GameState gState = GameState.Start;
@@ -30,6 +34,7 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        potText.GetComponent<Text>().text = "Pot Total: $" + potTotal;
         ChangeState(GameState.Start);
         HideMenu();
         GenerateDeck();    
@@ -53,12 +58,13 @@ public class GameController : MonoBehaviour
 
             case GameState.AITurn:
                 // testing, will update later             
-                ChangeState((table.Size() < 5) ? GameState.PlayerTurn : GameState.Evaluating);              
+                ChangeState((table.Size() < 5) ? GameState.PlayerTurn : GameState.Showdown);              
                 break;
 
-            case GameState.Evaluating:
+            case GameState.Showdown:
                 // testing, will update later
-                //gState = GameState.End; 
+                //gState = GameState.End;
+                Showdown();
                 ChangeState(GameState.End);
                 break;
 
@@ -115,21 +121,29 @@ public class GameController : MonoBehaviour
             for (int i = 0; i < 3; ++i)
             {
                 table.AddCard(deck[currentTopDeck]);
-                players[0].AddCardCopy(deck[currentTopDeck]);
+                foreach (Hand h in players)
+                {
+                    h.AddCardCopy(deck[currentTopDeck]);
+                }
                 ++currentTopDeck;
             }
         }
         else if (table.Size() < 5)
         {
             table.AddCard(deck[currentTopDeck]);
-            players[0].AddCardCopy(deck[currentTopDeck]);
+            foreach (Hand h in players)
+            {
+                h.AddCardCopy(deck[currentTopDeck]);
+            }
             ++currentTopDeck;
         }
     }
 
+
     public void StartGame()
     {
         // will update later
+        potTotal = 0;
         for (int i = 0; i <=1; ++i)
         {
             foreach (Hand h in players)
@@ -181,8 +195,8 @@ public class GameController : MonoBehaviour
         }
         else
         {
-            //gState = GameState.Evaluating;
-            ChangeState(GameState.Evaluating);
+            //gState = GameState.Showdown;
+            ChangeState(GameState.Showdown);
         }
     }
 
@@ -190,6 +204,51 @@ public class GameController : MonoBehaviour
     {
         gState = state;
         Debug.Log("Current state: " + gState);
+    }
+
+    public HandType BestHandType()
+    {
+        HandType best = HandType.HighCard;
+        foreach (Hand h in players)
+        {
+            if (h.playerHand > best)
+                best = h.playerHand;
+        }
+        return best;
+    }
+
+    // Calculate winners and give the prize
+    public void Showdown()
+    {
+        HandType best = BestHandType();
+
+        List<int> winnersIndices = new List<int>();
+        for(int i = 0; i < players.Length; ++i)
+        {
+            if (players[i].playerHand == best)
+            {
+                winnersIndices.Add(i);
+            }
+        }
+
+        int prize = (winnersIndices.Count <= 0) ? 0 : (potTotal / winnersIndices.Count);
+        Debug.Log(best);
+        //Debug.Log(winnersIndices);
+        Debug.Log(prize);
+        for(int i = 0; i < players.Length; ++i)
+        {
+            if (winnersIndices.Contains(i))
+            {
+                players[i].bank += prize;              
+            }
+            players[i].UpdateBank(0);
+        }
+    }
+
+    public void UpdatePot(int amount)
+    {
+        potTotal += amount;
+        potText.GetComponent<Text>().text = "Pot Total: $" + potTotal;
     }
 
     //////////////////////////////

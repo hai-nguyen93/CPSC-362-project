@@ -1560,6 +1560,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a4c9a08adc14c64385c83b65d1964b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &894383836 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 878975573, guid: 79155cab6b71d6b458abd88864d8117a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1679352928}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &940226609
 GameObject:
   m_ObjectHideFlags: 0
@@ -1997,7 +2003,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1110032894}
   - component: {fileID: 1110032895}
-  - component: {fileID: 1110032897}
   m_Layer: 5
   m_Name: Slider
   m_TagString: Untagged
@@ -2072,7 +2077,7 @@ MonoBehaviour:
   m_Direction: 0
   m_MinValue: 0
   m_MaxValue: 1
-  m_WholeNumbers: 0
+  m_WholeNumbers: 1
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2090,25 +2095,6 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Slider+SliderEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &1110032897
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1110032893}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99489b5a6fc85694d886366dd0cd86cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slideObject: {fileID: 0}
-  confirm: {fileID: 0}
-  disableCall: {fileID: 0}
-  disableFold: {fileID: 0}
-  raiseAmountText: {fileID: 0}
-  potText: {fileID: 0}
-  playerBankText: {fileID: 0}
 --- !u!1 &1193964360
 GameObject:
   m_ObjectHideFlags: 0
@@ -3307,10 +3293,15 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 4875727160080122471, guid: 79155cab6b71d6b458abd88864d8117a,
+        type: 3}
+      propertyPath: playerBankText
+      value: 
+      objectReference: {fileID: 894383836}
     - target: {fileID: 8347434910694443922, guid: 79155cab6b71d6b458abd88864d8117a,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6483130326168623399, guid: 79155cab6b71d6b458abd88864d8117a,
         type: 3}
@@ -3826,8 +3817,6 @@ MonoBehaviour:
   disableCall: {fileID: 842785088}
   disableFold: {fileID: 1595959023}
   raiseAmountText: {fileID: 10774302}
-  potText: {fileID: 554586953}
-  playerBankText: {fileID: 1801584303}
 --- !u!1001 &3773337016648905178
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3865,6 +3854,11 @@ PrefabInstance:
       propertyPath: players.Array.data[1]
       value: 
       objectReference: {fileID: 1536175252}
+    - target: {fileID: 3773337016773180429, guid: 35608b94dcbc7e84c84f01159d0b3ff1,
+        type: 3}
+      propertyPath: potText
+      value: 
+      objectReference: {fileID: 554586953}
     - target: {fileID: 3773337016773180418, guid: 35608b94dcbc7e84c84f01159d0b3ff1,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4398,20 +4392,15 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 4875727160080122471, guid: 79155cab6b71d6b458abd88864d8117a,
+        type: 3}
+      propertyPath: playerBankText
+      value: 
+      objectReference: {fileID: 1801584303}
     - target: {fileID: 8347434910694443922, guid: 79155cab6b71d6b458abd88864d8117a,
         type: 3}
       propertyPath: m_IsActive
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4875727159489108939, guid: 79155cab6b71d6b458abd88864d8117a,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4875727159489108937, guid: 79155cab6b71d6b458abd88864d8117a,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6483130326168623399, guid: 79155cab6b71d6b458abd88864d8117a,
         type: 3}
@@ -4422,6 +4411,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Text
       value: Hand Type
+      objectReference: {fileID: 0}
+    - target: {fileID: 4875727159489108939, guid: 79155cab6b71d6b458abd88864d8117a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4875727159489108937, guid: 79155cab6b71d6b458abd88864d8117a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 878975575, guid: 79155cab6b71d6b458abd88864d8117a, type: 3}
       propertyPath: m_Text
