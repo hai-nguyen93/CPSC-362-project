@@ -138,7 +138,7 @@ public class PlayerController : MonoBehaviour
                 // doesn't allow player to raise after they are All-In
                 if (allIn)
                 {
-                    raiseButton.SetActive(false);
+                    raiseButton.SetActive(false);// to be setActive on new round, TODO
                 }
 
                 //toggle buttons and text to original state

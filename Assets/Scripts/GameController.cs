@@ -19,7 +19,8 @@ public class GameController : MonoBehaviour
     [Header("Players Hands")]
     public Hand[] players;
 
-    public int blinds = 50;
+    public int blinds = 50; // 1st player after dealerPtr gets forced blind, 2nd after gets double blind
+    public int dealerPtr = 0; // points to the player with the dealerchip, updates everyRound
     public int potTotal = 0;
     public int lastBet;
 
@@ -38,7 +39,8 @@ public class GameController : MonoBehaviour
         potText.GetComponent<Text>().text = "Pot Total: $" + potTotal;
         ChangeState(GameState.Start);
         HideMenu();
-        GenerateDeck();    
+        GenerateDeck();
+        ForceBlinds();
     }
 
     // Update is called once per frame
@@ -254,6 +256,11 @@ public class GameController : MonoBehaviour
     {
         potTotal += amount;
         potText.GetComponent<Text>().text = "Pot Total: $" + potTotal;
+    }
+
+    public void ForceBlinds()
+    {
+        //TODO
     }
 
     //////////////////////////////
