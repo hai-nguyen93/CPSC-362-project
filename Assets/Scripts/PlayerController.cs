@@ -10,10 +10,14 @@ public class PlayerController : MonoBehaviour
     public GameObject slideObject;
     Slider slider;
     public GameObject confirm;
+    public GameObject allInButton;
     public GameObject disableCall;
     public GameObject disableFold;
     public GameObject raiseAmountText;
+    public GameObject raiseButton;
+    
     int raiseAmount;
+    bool allIn = false;
 
     //public GameObject potText;
     //public GameObject playerBankText;
@@ -28,9 +32,10 @@ public class PlayerController : MonoBehaviour
         gc = FindObjectOfType<GameController>();        
         slideObject.SetActive(false);
         slider = slideObject.GetComponent<Slider>();
-        slider.maxValue = 10000; // to be set to whatever current players bank is
+        slider.maxValue = hand.bank; // to be set to whatever current players bank is
         confirm.SetActive(false);
         raiseAmountText.SetActive(false);
+        allInButton.SetActive(false);
 
         //playerBank = 10000;
         //playerBankText.GetComponent<Text>().text = "$" + playerBank;          
@@ -66,28 +71,41 @@ public class PlayerController : MonoBehaviour
 
     public void RaiseClicked()
     {
-        //toggles UI elements on-click
-        if (slideObject.activeSelf == true)
+        if(hand.bank < gc.lastBet)
         {
-            slideObject.SetActive(false);
-            confirm.SetActive(false);
-            raiseAmountText.SetActive(false);
+            allInButton.SetActive(true);
+            raiseAmountText.SetActive(true);                 
+            raiseAmountText.GetComponent<Text>().text = "$" + hand.bank;
+            raiseAmount = hand.bank;
+            allIn = true;
         }
         else
         {
-            slideObject.SetActive(true);
-            confirm.SetActive(true);
-            raiseAmountText.SetActive(true);
-        }
-        if (disableCall.activeSelf == true)
-        {
-            disableFold.SetActive(false);
-            disableCall.SetActive(false);
-        }
-        else
-        {
-            disableFold.SetActive(true);
-            disableCall.SetActive(true);
+            slider.minValue = gc.lastBet;
+            slider.maxValue = hand.bank;
+            //toggles UI elements on-click
+            if (slideObject.activeSelf == true)
+            {
+                slideObject.SetActive(false);
+                confirm.SetActive(false);
+                raiseAmountText.SetActive(false);
+            }
+            else
+            {
+                slideObject.SetActive(true);
+                confirm.SetActive(true);
+                raiseAmountText.SetActive(true);
+            }
+            if (disableCall.activeSelf == true)
+            {
+                disableFold.SetActive(false);
+                disableCall.SetActive(false);
+            }
+            else
+            {
+                disableFold.SetActive(true);
+                disableCall.SetActive(true);
+            } 
         }
     }
 
@@ -100,6 +118,8 @@ public class PlayerController : MonoBehaviour
         raiseAmount = (int)slider.value;
         amount.text = "Amount: $" + raiseAmount;
 
+        
+
         Debug.Log("Raise amount = " + raiseAmount);
     }
 
@@ -107,7 +127,7 @@ public class PlayerController : MonoBehaviour
     {
         if (gc.gState == GameState.PlayerTurn)
         {
-            if(raiseAmount == 0)
+            if(raiseAmount == 0 && !allIn)
             {
                 Debug.Log("Raise Amount must be greater than $0");
             }
@@ -115,12 +135,19 @@ public class PlayerController : MonoBehaviour
             {
                 Debug.Log("Player Raise");
 
+                // doesn't allow player to raise after they are All-In
+                if (allIn)
+                {
+                    raiseButton.SetActive(false);
+                }
+
                 //toggle buttons and text to original state
                 disableFold.SetActive(true);
                 disableCall.SetActive(true);
                 slideObject.SetActive(false);
                 confirm.SetActive(false);
-                raiseAmountText.SetActive(false);                          
+                raiseAmountText.SetActive(false);
+                allInButton.SetActive(false);
 
                 hand.Raise(raiseAmount);
                 // do something

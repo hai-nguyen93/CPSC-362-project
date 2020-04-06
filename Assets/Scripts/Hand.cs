@@ -14,7 +14,7 @@ public class Hand : MonoBehaviour
     public Text handTypeText;
     public int bank;
     public GameObject playerBankText;
-    public int lastBet; //last amount bet
+    //public int lastBet; //last amount bet => moved to GameController
     protected bool canBet = true;
 
     GameController gc;
@@ -287,20 +287,20 @@ public class Hand : MonoBehaviour
         //need to implement input from user for amount to raise, add later.
         //(Luc commented this out) int raise = 0;
         //set lastBet equal to amount raised.
-        if(raiseAmount < lastBet)
-        {
+        //if(raiseAmount < gc.lastBet)
+        //{
             //tell user to input bet greater than last bet placed in.
-        }
-        else
-        {
-            lastBet = raiseAmount;
+        //}
+        //else
+        //{
+            gc.lastBet = raiseAmount;
             UpdateBank(-raiseAmount);
             //(Luc commented this out) int raiseAmount = raise + bank;
             //Luc : raiseAmount will be sent from playerController. For AI you can just random generate a reasonable bet 
 
             // add $ to potTotal
             gc.UpdatePot(raiseAmount);
-        }
+        //}
         Debug.Log("Raise");
         // do something
     }

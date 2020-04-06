@@ -21,6 +21,7 @@ public class GameController : MonoBehaviour
 
     public int blinds = 50;
     public int potTotal = 0;
+    public int lastBet;
 
     public GameObject potText;
 
@@ -243,6 +244,10 @@ public class GameController : MonoBehaviour
             }
             players[i].UpdateBank(0);
         }
+
+        //resets potTotal at end of showdown
+        potTotal = 0;
+        potText.GetComponent<Text>().text = "Pot Total: $" + potTotal;
     }
 
     public void UpdatePot(int amount)
