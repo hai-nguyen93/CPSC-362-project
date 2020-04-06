@@ -40,7 +40,7 @@ public class GameController : MonoBehaviour
         ChangeState(GameState.Start);
         HideMenu();
         GenerateDeck();
-        ForceBlinds();
+        //ForceBlinds(); -> move to StartGame();
     }
 
     // Update is called once per frame
@@ -88,7 +88,7 @@ public class GameController : MonoBehaviour
                 deck.Add(s + v);
             }
         }
-        Shuffle();
+        //Shuffle(); -> move to StartGame();
     }
 
     // Shuffle the deck
@@ -104,6 +104,7 @@ public class GameController : MonoBehaviour
                 deck[j] = temp;
             }
         }
+        currentTopDeck = 0;
     }
 
     public Sprite GetCardSprite(string card)
@@ -146,7 +147,9 @@ public class GameController : MonoBehaviour
     public void StartGame()
     {
         // will update later
+        Shuffle();
         potTotal = 0;
+        ForceBlinds();
         for (int i = 0; i <=1; ++i)
         {
             foreach (Hand h in players)
