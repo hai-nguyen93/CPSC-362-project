@@ -47,6 +47,17 @@ public class PlayerController : MonoBehaviour
         
     }
 
+    public void PlayerCheck()
+    {
+        if(gc.gState == GameState.PlayerTurn)
+        {
+            Debug.Log("Player.Check");
+            hand.Check();
+            //do something;
+            gc.EndPlayerTurn();
+        }
+    }
+
     public void PlayerFold()
     {
         if (gc.gState == GameState.PlayerTurn)
