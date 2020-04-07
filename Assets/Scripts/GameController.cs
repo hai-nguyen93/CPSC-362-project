@@ -21,6 +21,7 @@ public class GameController : MonoBehaviour
 
     public int blinds = 50; // 1st player after dealerPtr gets forced blind, 2nd after gets double blind
     public int dealerPtr = 0; // points to the player with the dealerchip, updates everyRound
+    public int roundNum = 0; // tracks round number, will increase blinds every 2 rounds 
     public int potTotal = 0;
     public int lastBet;
 
@@ -149,6 +150,17 @@ public class GameController : MonoBehaviour
         // will update later
         Shuffle();
         potTotal = 0;
+        if(roundNum != 0)
+        {
+            dealerPtr++;
+            if(dealerPtr == players.Length)
+            {
+                dealerPtr = 0;
+            }
+        }
+        roundNum++;
+        Debug.Log(dealerPtr);
+        Debug.Log(roundNum);
         ForceBlinds();
         for (int i = 0; i <=1; ++i)
         {
@@ -263,7 +275,33 @@ public class GameController : MonoBehaviour
 
     public void ForceBlinds()
     {
-        //TODO
+        int blindPtr1 = dealerPtr + 1, blindPtr2 = dealerPtr + 2;
+        if(roundNum != 0 && roundNum % 2 == 0)
+        {
+            blinds *= 2; // doubles blinds every 2 rounds;
+        }
+
+        if(dealerPtr + 2 >= players.Length)//wraps the blindptrs around if the dealerchip is close to the end of player array
+        {
+            if(dealerPtr == players.Length - 1)// if dealerPtr is last person in player array
+            {
+                blindPtr1 = 0; //small blind is players[0]
+                blindPtr2 = 1; //big blind is players[1]
+            }
+            else if(dealerPtr == players.Length - 2)// if dealerPtr is 2nd to last person in player array
+            {
+                //small blind is last player in array
+                blindPtr2 = 0; //big blind is players[0]
+            }
+        }
+        players[blindPtr1].UpdateBank(-blinds); // small blind for 1st player after dealer
+        players[blindPtr2].UpdateBank(-(blinds * 2)); // big blind for 2nd player after dealer
+        Debug.Log("dealerPtr:" + dealerPtr);
+        Debug.Log("blindPtr1:" + blindPtr1);
+        Debug.Log("blindPtr2:" + blindPtr2);
+        int blindTotal = blinds * 3;
+        potTotal += blindTotal;
+        potText.GetComponent<Text>().text = "Pot Total: $" + potTotal;
     }
 
     //////////////////////////////
