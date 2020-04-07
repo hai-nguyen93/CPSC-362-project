@@ -24,6 +24,7 @@ public class GameController : MonoBehaviour
     public int roundNum = 0; // tracks round number, will increase blinds every 2 rounds 
     public int potTotal = 0;
     public int lastBet;
+    public bool betPlaced = false; // if someone raises this becomes true, and check button turns into call button
 
     public GameObject potText;
 
@@ -150,6 +151,7 @@ public class GameController : MonoBehaviour
         // will update later
         Shuffle();
         potTotal = 0;
+        betPlaced = false;
         if(roundNum != 0)
         {
             dealerPtr++;
@@ -159,8 +161,6 @@ public class GameController : MonoBehaviour
             }
         }
         roundNum++;
-        Debug.Log(dealerPtr);
-        Debug.Log(roundNum);
         ForceBlinds();
         for (int i = 0; i <=1; ++i)
         {
@@ -171,6 +171,7 @@ public class GameController : MonoBehaviour
             }
 
         }
+
 
         //players[0].AddCardToHand(deck[currentTopDeck]);
         //++currentTopDeck;
