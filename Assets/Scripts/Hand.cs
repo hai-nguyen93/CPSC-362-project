@@ -16,6 +16,7 @@ public class Hand : MonoBehaviour
     public GameObject playerBankText;
     //public int lastBet; //last amount bet => moved to GameController
     protected bool canBet = true;
+    public bool isFolded = false;
 
     GameController gc;
 
@@ -225,7 +226,7 @@ public class Hand : MonoBehaviour
                 counter++;
             }
         }
-        if (counter == 2)
+        if (counter >= 2)
             return true;
         else
             return false;

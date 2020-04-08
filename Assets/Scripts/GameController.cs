@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public enum GameState { Start, PlayerTurn, AITurn, Showdown, End};
+public enum GameState { Processing, Start, PlayerTurn, AITurn, Showdown, End};
 
 public class GameController : MonoBehaviour
 {
@@ -74,7 +74,11 @@ public class GameController : MonoBehaviour
                 break;
 
             case GameState.End:
-                //Debug.Log("Game Ended.");
+                //Debug.Log("Game Ended.");              
+                //EndGame();
+                break;
+
+            case GameState.Processing:
                 break;
         }
     }
@@ -144,7 +148,6 @@ public class GameController : MonoBehaviour
             ++currentTopDeck;
         }
     }
-
 
     public void StartGame()
     {
@@ -303,6 +306,31 @@ public class GameController : MonoBehaviour
         int blindTotal = blinds * 3;
         potTotal += blindTotal;
         potText.GetComponent<Text>().text = "Pot Total: $" + potTotal;
+    }
+
+    IEnumerator ChangeStateAfterSeconds(GameState state, float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        ChangeState(state);
+    }
+
+    public void EndGame()
+    {
+        ChangeState(GameState.Processing);
+        foreach (Hand h in players)
+        {
+            if (h.bank <= 100)
+            {
+                Debug.Log(h.gameObject.name + "lost!");
+                return;
+            }
+        }
+
+        // if all players can still play, reset the table
+        // clear table
+
+        // start a new round
+        StartCoroutine(ChangeStateAfterSeconds(GameState.Start, 2));
     }
 
     //////////////////////////////
