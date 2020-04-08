@@ -31,6 +31,15 @@ public class TableCards : MonoBehaviour
         }
     }
 
+    public void Clear()
+    {
+        cards.Clear();
+        foreach (Image i in cardImages)
+        {
+            i.enabled = false;
+        }
+    }
+
     public int Size()
     {
         return cards.Count;

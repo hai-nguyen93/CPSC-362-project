@@ -24,7 +24,7 @@ public class Hand : MonoBehaviour
     void Start()
     {
         gc = FindObjectOfType<GameController>();
-        handTypeText.enabled = false;
+        ClearHand();
         bank = 10000;
         UpdateBank(0);
     }
@@ -33,6 +33,14 @@ public class Hand : MonoBehaviour
     void Update()
     {
 
+    }
+
+    public void ClearHand()
+    {
+        cards.Clear();
+        card1.enabled = false;
+        card2.enabled = false;
+        handTypeText.enabled = false;
     }
 
     // Add card to hand from deck

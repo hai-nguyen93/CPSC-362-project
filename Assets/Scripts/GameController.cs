@@ -75,7 +75,7 @@ public class GameController : MonoBehaviour
 
             case GameState.End:
                 //Debug.Log("Game Ended.");              
-                //EndGame();
+                EndGame();
                 break;
 
             case GameState.Processing:
@@ -151,9 +151,11 @@ public class GameController : MonoBehaviour
 
     public void StartGame()
     {
-        // will update later
+        ClearTable();
+
         Shuffle();
         potTotal = 0;
+        lastBet = 0;
         betPlaced = false;
         if(roundNum != 0)
         {
@@ -326,11 +328,17 @@ public class GameController : MonoBehaviour
             }
         }
 
-        // if all players can still play, reset the table
-        // clear table
-
-        // start a new round
+        // if all players can still play start a new round
         StartCoroutine(ChangeStateAfterSeconds(GameState.Start, 2));
+    }
+
+    public void ClearTable()
+    {
+        foreach (Hand h in players)
+        {
+            h.ClearHand();
+        }
+        table.Clear();
     }
 
     //////////////////////////////
