@@ -28,6 +28,7 @@ public class GameController : MonoBehaviour
     public int currentPlayers; //players in current round who haven't folded. if == 1, that player auto wins round
 
     public GameObject potText;
+    public GameObject blindsText;
 
     //[HideInInspector]
     public GameState gState = GameState.Start;
@@ -40,6 +41,7 @@ public class GameController : MonoBehaviour
     void Start()
     {
         potText.GetComponent<Text>().text = "Pot Total: $" + potTotal;
+        blindsText.GetComponent<Text>().text = "Blinds: $" + blinds + " / $" + (blinds * 2);
         ChangeState(GameState.Start);
         HideMenu();
         GenerateDeck();
@@ -292,6 +294,7 @@ public class GameController : MonoBehaviour
         if(roundNum != 0 && roundNum % 2 == 0)
         {
             blinds *= 2; // doubles blinds every 2 rounds;
+            blindsText.GetComponent<Text>().text = "Blinds: $" + blinds + " / $" + (blinds * 2); //TODO: MOVE DEALER CHIP ICON
         }
 
         if(dealerPtr + 2 >= players.Length)//wraps the blindptrs around if the dealerchip is close to the end of player array
