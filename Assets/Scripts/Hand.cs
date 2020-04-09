@@ -293,6 +293,7 @@ public class Hand : MonoBehaviour
 
         // after this statement, remove player/cards from hand, will add later.
         card1.enabled = false;
+        card2.enabled = false;
         gc.currentPlayers--;
         Debug.Log("Fold");
         // do something
