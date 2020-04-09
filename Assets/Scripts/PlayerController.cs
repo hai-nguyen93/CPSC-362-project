@@ -46,18 +46,9 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if new round, reset all buttons 
-            checkButton.SetActive(true);
-            foldButton.SetActive(true);
-            if(allIn == true)
-            {
-                allIn = false;
-                raiseButton.SetActive(true);
-                allInButton.SetActive(false);
-                confirm.SetActive(false);
-            }
-        }
+
     }
+    
 
     public void PlayerCheck()
     {
@@ -164,6 +155,20 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Raise amount = " + raiseAmount);
     }
 
+    public void ResetButtons()
+    {
+        //if new round, reset all buttons 
+        checkButton.SetActive(true);
+        foldButton.SetActive(true);
+        if (allIn == true)
+        {
+            allIn = false;
+            raiseButton.SetActive(true);
+            allInButton.SetActive(false);
+            confirm.SetActive(false);
+        }
+    }
+
     public void PlayerRaise()
     {
         if (gc.gState == GameState.PlayerTurn)
@@ -173,6 +178,7 @@ public class PlayerController : MonoBehaviour
             gc.betPlaced = true;
             callButton.SetActive(true);
             checkButton.SetActive(false);
+            
 
             if(raiseAmount == 0 && !allIn)
             {
@@ -203,3 +209,4 @@ public class PlayerController : MonoBehaviour
         }
     }
 }
+
