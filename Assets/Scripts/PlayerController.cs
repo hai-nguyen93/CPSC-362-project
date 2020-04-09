@@ -46,7 +46,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (gc.gState == GameState.End)
+        {
+            ResetButtons();
+        }
     }
     
 
@@ -158,6 +161,7 @@ public class PlayerController : MonoBehaviour
     public void ResetButtons()
     {
         //if new round, reset all buttons 
+        callButton.SetActive(false);
         checkButton.SetActive(true);
         foldButton.SetActive(true);
         if (allIn == true)
