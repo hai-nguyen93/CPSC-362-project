@@ -145,14 +145,14 @@ public class PlayerController : MonoBehaviour
             if (checkButton.activeSelf == true || callButton.activeSelf == true)
             {
                 foldButton.SetActive(false);
-                if (gc.betPlaced)
-                {
+                //if (gc.betPlaced)
+                //{
                     callButton.SetActive(false);
-                }
-                else
-                {
+                //}
+                //else
+                //{
                     checkButton.SetActive(false);
-                }
+                //}
                 
             }
             else
