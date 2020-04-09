@@ -292,7 +292,7 @@ public class Hand : MonoBehaviour
         //gc.EndPlayerTurn(); -> player turn ended in PlayerController
 
         // after this statement, remove player/cards from hand, will add later.
-        ClearHand();
+        card1.enabled = false;
         gc.currentPlayers--;
         Debug.Log("Fold");
         // do something
