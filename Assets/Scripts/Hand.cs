@@ -17,6 +17,8 @@ public class Hand : MonoBehaviour
     //public int lastBet; //last amount bet => moved to GameController
     protected bool canBet = true;
     public bool isFolded = false;
+    public bool acted = false;
+    public int totalBet = 0;
 
     GameController gc;
 
@@ -37,11 +39,19 @@ public class Hand : MonoBehaviour
 
     public void ClearHand()
     {
+        totalBet = 0;
         isFolded = false;
+        acted = false;
         cards.Clear();
         card1.enabled = false;
         card2.enabled = false;
         handTypeText.enabled = false;
+
+        PlayerController pc = GetComponent<PlayerController>();
+        if (pc != null)
+        {
+            pc.ResetButtons();
+        }
     }
 
     // Add card to hand from deck
@@ -281,6 +291,8 @@ public class Hand : MonoBehaviour
     {
         //grab last amount bet in, add to bank.
         //bank = lastBet + bank;
+        Raise(gc.lastBet - totalBet);
+        acted = true;
         Debug.Log("Call");
         // do something
     }
@@ -288,6 +300,8 @@ public class Hand : MonoBehaviour
     public void Fold()
     {
         isFolded = true;
+        acted = true;
+        playerHand = HandType.Folded;
         //skip turn of current player
         //gc.EndPlayerTurn(); -> player turn ended in PlayerController
 
@@ -310,7 +324,9 @@ public class Hand : MonoBehaviour
         //}
         //else
         //{
-            gc.lastBet = raiseAmount;
+            totalBet += raiseAmount;
+            gc.lastBet = totalBet;
+            //gc.lastBet = raiseAmount;
             UpdateBank(-raiseAmount);
             //(Luc commented this out) int raiseAmount = raise + bank;
             //Luc : raiseAmount will be sent from playerController. For AI you can just random generate a reasonable bet 
@@ -318,6 +334,7 @@ public class Hand : MonoBehaviour
             // add $ to potTotal
             gc.UpdatePot(raiseAmount);
         //}
+        acted = true;
         Debug.Log("Raise");
         // do something
     }
@@ -326,6 +343,7 @@ public class Hand : MonoBehaviour
     {
         //set betting for current player to false, end turn
         canBet = false;
+        acted = true;
         //gc.EndPlayerTurn(); -> player turn ended in Playercontroller
         Debug.Log("Check");
     }

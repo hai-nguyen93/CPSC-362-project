@@ -1416,7 +1416,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1874076428}
-        m_MethodName: PlayerCall
+        m_MethodName: PlayerCheck
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

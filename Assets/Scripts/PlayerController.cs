@@ -46,7 +46,25 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (gc.gState == GameState.PlayerTurn)
+        {
+            if (hand.totalBet == gc.lastBet)
+            {
+                if (callButton.activeSelf)
+                {
+                    callButton.SetActive(false);
+                    checkButton.SetActive(true);
+                }
+            }
+            else if (hand.totalBet < gc.lastBet)
+            {
+                if (!callButton.activeSelf)
+                {
+                    callButton.SetActive(true);
+                    checkButton.SetActive(false);
+                }
+            }
+        }
     }
     
 
@@ -68,11 +86,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Player Fold");
             hand.Fold();
             // do something
-            gc.EndPlayerTurn();
-            if (gc.gState == GameState.End)
-            {
-                ResetButtons();
-            }
+            gc.EndPlayerTurn();            
         }
     }
 
@@ -91,14 +105,25 @@ public class PlayerController : MonoBehaviour
     {
         if(hand.bank < gc.lastBet)
         {
-            foldButton.SetActive(false);
-            checkButton.SetActive(false);
-            callButton.SetActive(false);
-            allInButton.SetActive(true);
-            raiseAmountText.SetActive(true);                 
-            raiseAmountText.GetComponent<Text>().text = "$" + hand.bank;
-            raiseAmount = hand.bank;
-            allIn = true;
+            if (!allInButton.activeSelf)
+            {
+                foldButton.SetActive(false);
+                checkButton.SetActive(false);
+                callButton.SetActive(false);
+                allInButton.SetActive(true);
+                raiseAmountText.SetActive(true);
+                raiseAmountText.GetComponent<Text>().text = "$" + hand.bank;
+                raiseAmount = hand.bank;
+                allIn = true;
+            }
+            else
+            {
+                foldButton.SetActive(true);
+                checkButton.SetActive(false);
+                callButton.SetActive(true);
+                allInButton.SetActive(false);
+                raiseAmountText.SetActive(false);
+            }
         }
         else
         {

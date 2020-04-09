@@ -19,4 +19,19 @@ public class AIController : MonoBehaviour
     {
         
     }
+
+    public void Act()
+    {
+        if (hand.totalBet < gc.lastBet)
+        {
+            Debug.Log("AI Call.");
+            hand.Call();       
+        }
+        else if(hand.totalBet == gc.lastBet)
+        {
+            Debug.Log("AI Check.");
+            hand.Check();
+        }
+        gc.EndPlayerTurn();
+    }
 }

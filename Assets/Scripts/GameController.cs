@@ -23,9 +23,10 @@ public class GameController : MonoBehaviour
     public int dealerPtr = 0; // points to the player with the dealerchip, updates everyRound
     public int roundNum = 0; // tracks round number, will increase blinds every 2 rounds 
     public int potTotal = 0;
-    public int lastBet;
+    public int lastBet; 
     public bool betPlaced = false; // if someone raises this becomes true, and check button turns into call button
     public int currentPlayers; //players in current round who haven't folded. if == 1, that player auto wins round
+    public int currentBetRound = 1;
 
     public GameObject potText;
     public GameObject blindsText;
@@ -45,7 +46,7 @@ public class GameController : MonoBehaviour
         ChangeState(GameState.Start);
         HideMenu();
         GenerateDeck();
-        currentPlayers = players.Length;
+        currentPlayers = players.Length;     
         //ForceBlinds(); -> move to StartGame();
     }
 
@@ -56,8 +57,7 @@ public class GameController : MonoBehaviour
         switch (gState)
         {
             case GameState.Start:
-                StartGame();
-                //gState = GameState.AITurn;    
+                StartGame();    
                 ChangeState(GameState.AITurn);
                 break;
 
@@ -67,7 +67,8 @@ public class GameController : MonoBehaviour
 
             case GameState.AITurn:
                 // testing, will update later             
-                ChangeState((table.Size() < 5) ? GameState.PlayerTurn : GameState.Showdown);              
+                //ChangeState((table.Size() < 5) ? GameState.PlayerTurn : GameState.Showdown); 
+                players[1].GetComponent<AIController>().Act();
                 break;
 
             case GameState.Showdown:
@@ -141,6 +142,11 @@ public class GameController : MonoBehaviour
                 }
                 ++currentTopDeck;
             }
+
+            foreach (Hand h in players)
+            {
+                h.acted = false;
+            }
         }
         else if (table.Size() < 5)
         {
@@ -150,6 +156,11 @@ public class GameController : MonoBehaviour
                 h.AddCardCopy(deck[currentTopDeck]);
             }
             ++currentTopDeck;
+
+            foreach (Hand h in players)
+            {
+                h.acted = false;
+            }
         }
     }
 
@@ -181,7 +192,7 @@ public class GameController : MonoBehaviour
             }
 
         }
-
+        currentBetRound = 1;
 
         //players[0].AddCardToHand(deck[currentTopDeck]);
         //++currentTopDeck;
@@ -218,18 +229,37 @@ public class GameController : MonoBehaviour
         // testing, will update later   
         if(currentPlayers == 1)
         {
-            ChangeState(GameState.End);
+            ChangeState(GameState.Showdown);
+            return;
         }
-        else if (table.Size() < 5)
+
+        bool allBet = true;
+        int bet = players[0].totalBet;
+        foreach (Hand h in players)
         {
-            DealCard();
-            //gState = GameState.AITurn;
-            ChangeState(GameState.AITurn);
+            if (h.totalBet != bet || !h.acted)
+                allBet = false;
+        }
+
+        if (table.Size() < 5)
+        {
+            if (allBet)
+            {
+                DealCard();
+            }
+
+            ChangeState((gState == GameState.PlayerTurn) ? GameState.AITurn : GameState.PlayerTurn);
         }
         else
         {
-            //gState = GameState.Showdown;
-            ChangeState(GameState.Showdown);
+            if (allBet)
+            {
+                ChangeState(GameState.Showdown);
+            }
+            else
+            {
+                ChangeState((gState == GameState.PlayerTurn) ? GameState.AITurn : GameState.PlayerTurn);
+            }
         }
     }
 
@@ -310,18 +340,22 @@ public class GameController : MonoBehaviour
                 blindPtr2 = 0; //big blind is players[0]
             }
         }
-        players[blindPtr1].UpdateBank(-blinds); // small blind for 1st player after dealer
-        players[blindPtr2].UpdateBank(-(blinds * 2)); // big blind for 2nd player after dealer
+        //players[blindPtr1].UpdateBank(-blinds); // small blind for 1st player after dealer
+        //players[blindPtr2].UpdateBank(-(blinds * 2)); // big blind for 2nd player after dealer
+        players[blindPtr1].Raise(blinds); players[blindPtr1].acted = false;
+        players[blindPtr2].Raise(blinds * 2); players[blindPtr2].acted = false;
+
         Debug.Log("dealerPtr:" + dealerPtr);
         Debug.Log("blindPtr1:" + blindPtr1);
         Debug.Log("blindPtr2:" + blindPtr2);
-        int blindTotal = blinds * 3;
-        potTotal += blindTotal;
+        //int blindTotal = blinds * 3;
+        //potTotal += blindTotal;
         potText.GetComponent<Text>().text = "Pot Total: $" + potTotal;
     }
 
     IEnumerator ChangeStateAfterSeconds(GameState state, float seconds)
     {
+        ChangeState(GameState.Processing);
         yield return new WaitForSeconds(seconds);
         ChangeState(state);
     }
