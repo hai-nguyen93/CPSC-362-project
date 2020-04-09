@@ -47,6 +47,9 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //if new round, reset all buttons 
+        if(gc.gState == GameState.End)
+        {
+            callButton.SetActive(false);
             checkButton.SetActive(true);
             foldButton.SetActive(true);
             if(allIn == true)

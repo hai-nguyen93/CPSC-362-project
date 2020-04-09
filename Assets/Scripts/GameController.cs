@@ -25,6 +25,7 @@ public class GameController : MonoBehaviour
     public int potTotal = 0;
     public int lastBet;
     public bool betPlaced = false; // if someone raises this becomes true, and check button turns into call button
+    public int currentPlayers; //players in current round who haven't folded. if == 1, that player auto wins round
 
     public GameObject potText;
 
@@ -42,6 +43,7 @@ public class GameController : MonoBehaviour
         ChangeState(GameState.Start);
         HideMenu();
         GenerateDeck();
+        currentPlayers = players.Length;
         //ForceBlinds(); -> move to StartGame();
     }
 
@@ -155,6 +157,7 @@ public class GameController : MonoBehaviour
 
         Shuffle();
         potTotal = 0;
+        currentPlayers = players.Length;
         lastBet = 0;
         betPlaced = false;
         if(roundNum != 0)
@@ -210,8 +213,12 @@ public class GameController : MonoBehaviour
 
     public void EndPlayerTurn()
     {
-        // testing, will update later        
-        if (table.Size() < 5)
+        // testing, will update later   
+        if(currentPlayers == 1)
+        {
+            ChangeState(GameState.End);
+        }
+        else if (table.Size() < 5)
         {
             DealCard();
             //gState = GameState.AITurn;

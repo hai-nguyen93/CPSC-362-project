@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum HandType { HighCard, Pair, TwoPairs, ThreeOfAKind, Straight, Flush, FullHouse, FourOfAKind, StraightFlush, RoyalFlush}
+public enum HandType { Folded, HighCard, Pair, TwoPairs, ThreeOfAKind, Straight, Flush, FullHouse, FourOfAKind, StraightFlush, RoyalFlush}
 
 public class Hand : MonoBehaviour
 {
@@ -37,6 +37,7 @@ public class Hand : MonoBehaviour
 
     public void ClearHand()
     {
+        isFolded = false;
         cards.Clear();
         card1.enabled = false;
         card2.enabled = false;
@@ -83,6 +84,8 @@ public class Hand : MonoBehaviour
 
     public HandType CalculateHand()
     {
+        if (isFolded)
+            return HandType.Folded;
         sortHand();
         if (isRoyalFlush())
             return HandType.RoyalFlush;
@@ -284,9 +287,13 @@ public class Hand : MonoBehaviour
 
     public void Fold()
     {
+        isFolded = true;
         //skip turn of current player
-        gc.EndPlayerTurn();
+        //gc.EndPlayerTurn(); -> player turn ended in PlayerController
+
         // after this statement, remove player/cards from hand, will add later.
+        ClearHand();
+        gc.currentPlayers--;
         Debug.Log("Fold");
         // do something
     }
@@ -318,7 +325,7 @@ public class Hand : MonoBehaviour
     {
         //set betting for current player to false, end turn
         canBet = false;
-        gc.EndPlayerTurn();
+        //gc.EndPlayerTurn(); -> player turn ended in Playercontroller
         Debug.Log("Check");
     }
 
