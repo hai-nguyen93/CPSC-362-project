@@ -46,7 +46,17 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        //if new round, reset all buttons 
+            checkButton.SetActive(true);
+            foldButton.SetActive(true);
+            if(allIn == true)
+            {
+                allIn = false;
+                raiseButton.SetActive(true);
+                allInButton.SetActive(false);
+                confirm.SetActive(false);
+            }
+        }
     }
 
     public void PlayerCheck()
@@ -86,6 +96,9 @@ public class PlayerController : MonoBehaviour
     {
         if(hand.bank < gc.lastBet)
         {
+            foldButton.SetActive(false);
+            checkButton.SetActive(false);
+            callButton.SetActive(false);
             allInButton.SetActive(true);
             raiseAmountText.SetActive(true);                 
             raiseAmountText.GetComponent<Text>().text = "$" + hand.bank;
