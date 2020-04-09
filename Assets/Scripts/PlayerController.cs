@@ -46,10 +46,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gc.gState == GameState.End)
-        {
-            ResetButtons();
-        }
+        
     }
     
 
@@ -72,6 +69,10 @@ public class PlayerController : MonoBehaviour
             hand.Fold();
             // do something
             gc.EndPlayerTurn();
+            if (gc.gState == GameState.End)
+            {
+                ResetButtons();
+            }
         }
     }
 
