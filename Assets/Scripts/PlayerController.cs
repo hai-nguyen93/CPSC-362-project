@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     
     int raiseAmount;
     bool allIn = false;
+    public bool raiseClicked = false;
 
     //public GameObject potText;
     //public GameObject playerBankText;
@@ -46,23 +47,18 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gc.gState == GameState.PlayerTurn)
+        if (gc.gState == GameState.PlayerTurn && !raiseClicked)
         {
             if (hand.totalBet == gc.lastBet)
             {
-                if (callButton.activeSelf)
-                {
-                    callButton.SetActive(false);
-                    checkButton.SetActive(true);
-                }
+                callButton.SetActive(false);
+                checkButton.SetActive(true);
+
             }
             else if (hand.totalBet < gc.lastBet)
             {
-                if (!callButton.activeSelf)
-                {
-                    callButton.SetActive(true);
-                    checkButton.SetActive(false);
-                }
+                callButton.SetActive(true);
+                checkButton.SetActive(false);
             }
         }
     }
@@ -107,6 +103,7 @@ public class PlayerController : MonoBehaviour
         {
             if (!allInButton.activeSelf)
             {
+                raiseClicked = true;
                 foldButton.SetActive(false);
                 checkButton.SetActive(false);
                 callButton.SetActive(false);
@@ -118,6 +115,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
+                raiseClicked = false;
                 foldButton.SetActive(true);
                 checkButton.SetActive(false);
                 callButton.SetActive(true);
@@ -132,12 +130,14 @@ public class PlayerController : MonoBehaviour
             //toggles UI elements on-click
             if (slideObject.activeSelf == true)
             {
+                raiseClicked = false;
                 slideObject.SetActive(false);
                 confirm.SetActive(false);
                 raiseAmountText.SetActive(false);
             }
             else
             {
+                raiseClicked = true;
                 slideObject.SetActive(true);
                 confirm.SetActive(true);
                 raiseAmountText.SetActive(true);
@@ -187,16 +187,17 @@ public class PlayerController : MonoBehaviour
     public void ResetButtons()
     {
         //if new round, reset all buttons 
+        raiseClicked = false;
         callButton.SetActive(false);
         checkButton.SetActive(true);
         foldButton.SetActive(true);
-        if (allIn == true)
-        {
+        //if (allIn == true)
+        //{
             allIn = false;
             raiseButton.SetActive(true);
             allInButton.SetActive(false);
             confirm.SetActive(false);
-        }
+        //}
     }
 
     public void PlayerRaise()
@@ -205,7 +206,7 @@ public class PlayerController : MonoBehaviour
         {
             // turns check button into call button after bet is placed
             // TODO: check button to be reverted if bet was matched already and no one else raised
-            gc.betPlaced = true;
+            //gc.betPlaced = true;
             callButton.SetActive(true);
             checkButton.SetActive(false);
             
@@ -225,6 +226,7 @@ public class PlayerController : MonoBehaviour
                 }
 
                 //toggle buttons and text to original state
+                raiseClicked = false;
                 foldButton.SetActive(true);
                 callButton.SetActive(true);
                 slideObject.SetActive(false);
