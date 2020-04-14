@@ -24,10 +24,26 @@ public class AIController : MonoBehaviour
     {
         if (hand.totalBet < gc.lastBet)
         {
-            Debug.Log("AI Call.");
-            hand.Call();       
+            if (hand.bank > 0)
+            {
+                if (hand.bank < gc.lastBet - hand.totalBet)
+                {
+                    Debug.Log("AI all in");
+                    hand.Raise(hand.bank);
+                }
+                else
+                {
+                    Debug.Log("AI Call.");
+                    hand.Call();
+                }
+            }
+            else
+            {
+                Debug.Log("AI check - $0 left");
+                hand.Check();
+            }
         }
-        else if(hand.totalBet == gc.lastBet)
+        else if (hand.totalBet == gc.lastBet)
         {
             Debug.Log("AI Check.");
             hand.Check();

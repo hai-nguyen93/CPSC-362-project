@@ -2613,7 +2613,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1293831920
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4246,6 +4246,7 @@ MonoBehaviour:
   foldButton: {fileID: 1595959023}
   raiseAmountText: {fileID: 10774302}
   raiseButton: {fileID: 1873320781}
+  raiseClicked: 0
 --- !u!1001 &3773337016648905178
 PrefabInstance:
   m_ObjectHideFlags: 0
