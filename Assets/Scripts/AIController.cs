@@ -50,4 +50,14 @@ public class AIController : MonoBehaviour
         }
         gc.EndPlayerTurn();
     }
+
+    public void ShowInfo()
+    {
+        
+    }
+
+    public void HideInfo()
+    {
+
+    }
 }
