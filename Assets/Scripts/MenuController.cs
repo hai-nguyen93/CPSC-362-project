@@ -19,7 +19,7 @@ public class MenuController : MonoBehaviour
 	
 	public void LoadTutorial(){
 		Debug.Log("Load tutorial");
-		//TODO
+		SceneManager.LoadScene("Tutorial");
 	}
 	
 	public void LoadGame(){
