@@ -47,7 +47,6 @@ public class GameController : MonoBehaviour
         HideMenu();
         GenerateDeck();
         currentPlayers = players.Length;     
-        //ForceBlinds(); -> move to StartGame();
     }
 
     // Update is called once per frame
@@ -65,14 +64,11 @@ public class GameController : MonoBehaviour
                 //Debug.Log("waiting for player action");
                 break;
 
-            case GameState.AITurn:
-                // testing, will update later             
-                //ChangeState((table.Size() < 5) ? GameState.PlayerTurn : GameState.Showdown); 
+            case GameState.AITurn:               
                 players[1].GetComponent<AIController>().Act();
                 break;
 
-            case GameState.Showdown:
-                // testing, will update later
+            case GameState.Showdown:               
                 //gState = GameState.End;
                 Showdown();
                 ChangeState(GameState.End);
@@ -98,8 +94,7 @@ public class GameController : MonoBehaviour
             {
                 deck.Add(s + v);
             }
-        }
-        //Shuffle(); -> move to StartGame();
+        }       
     }
 
     // Shuffle the deck
@@ -190,14 +185,9 @@ public class GameController : MonoBehaviour
                 h.AddCardToHand(deck[currentTopDeck]);
                 ++currentTopDeck;
             }
-
         }
-        currentBetRound = 1;
-
-        //players[0].AddCardToHand(deck[currentTopDeck]);
-        //++currentTopDeck;
-        //players[0].AddCardToHand(deck[currentTopDeck]);
-        //++currentTopDeck;
+        players[1].GetComponent<AIController>().HideInfo();
+        currentBetRound = 1;    
     }
 
     /////////////////////////////
@@ -283,6 +273,8 @@ public class GameController : MonoBehaviour
     // Calculate winners and give the prize
     public void Showdown()
     {
+        players[1].GetComponent<AIController>().ShowInfo();
+
         HandType best = BestHandType();
 
         List<int> winnersIndices = new List<int>();
@@ -373,7 +365,7 @@ public class GameController : MonoBehaviour
         }
 
         // if all players can still play start a new round
-        StartCoroutine(ChangeStateAfterSeconds(GameState.Start, 2));
+        StartCoroutine(ChangeStateAfterSeconds(GameState.Start, 3));
     }
 
     public void ClearTable()

@@ -47,18 +47,24 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gc.gState == GameState.PlayerTurn && !raiseClicked)
+        if (gc.gState == GameState.PlayerTurn)
         {
-            if (hand.totalBet == gc.lastBet)
-            {
-                callButton.SetActive(false);
-                checkButton.SetActive(true);
+            if (!hand.handTypeText.enabled)
+                hand.handTypeText.enabled = true;
 
-            }
-            else if (hand.totalBet < gc.lastBet)
+            if (!raiseClicked)
             {
-                callButton.SetActive(true);
-                checkButton.SetActive(false);
+                if (hand.totalBet == gc.lastBet)
+                {
+                    callButton.SetActive(false);
+                    checkButton.SetActive(true);
+
+                }
+                else if (hand.totalBet < gc.lastBet)
+                {
+                    callButton.SetActive(true);
+                    checkButton.SetActive(false);
+                }
             }
         }
     }
@@ -69,8 +75,7 @@ public class PlayerController : MonoBehaviour
         if(gc.gState == GameState.PlayerTurn)
         {
             Debug.Log("Player.Check");
-            hand.Check();
-            //do something;
+            hand.Check();          
             gc.EndPlayerTurn();
         }
     }
@@ -80,8 +85,7 @@ public class PlayerController : MonoBehaviour
         if (gc.gState == GameState.PlayerTurn)
         {
             Debug.Log("Player Fold");
-            hand.Fold();
-            // do something
+            hand.Fold();          
             gc.EndPlayerTurn();            
         }
     }
@@ -91,8 +95,7 @@ public class PlayerController : MonoBehaviour
         if (gc.gState == GameState.PlayerTurn)
         {
             Debug.Log("Player Call");
-            hand.Call();
-            // do something
+            hand.Call();           
             gc.EndPlayerTurn();
         }
     }
@@ -145,15 +148,8 @@ public class PlayerController : MonoBehaviour
             if (checkButton.activeSelf == true || callButton.activeSelf == true)
             {
                 foldButton.SetActive(false);
-                //if (gc.betPlaced)
-                //{
-                    callButton.SetActive(false);
-                //}
-                //else
-                //{
-                    checkButton.SetActive(false);
-                //}
-                
+                callButton.SetActive(false);
+                checkButton.SetActive(false);
             }
             else
             {
@@ -191,21 +187,17 @@ public class PlayerController : MonoBehaviour
         callButton.SetActive(false);
         checkButton.SetActive(true);
         foldButton.SetActive(true);
-        //if (allIn == true)
-        //{
-            allIn = false;
-            raiseButton.SetActive(true);
-            allInButton.SetActive(false);
-            confirm.SetActive(false);
-        //}
+
+        allIn = false;
+        raiseButton.SetActive(true);
+        allInButton.SetActive(false);
+        confirm.SetActive(false);       
     }
 
     public void PlayerRaise()
     {
         if (gc.gState == GameState.PlayerTurn)
-        {
-            // turns check button into call button after bet is placed
-            // TODO: check button to be reverted if bet was matched already and no one else raised
+        {           
             //gc.betPlaced = true;
             callButton.SetActive(true);
             checkButton.SetActive(false);
@@ -222,7 +214,7 @@ public class PlayerController : MonoBehaviour
                 // doesn't allow player to raise after they are All-In
                 if (allIn)
                 {
-                    raiseButton.SetActive(false);// to be setActive on new round, TODO
+                    raiseButton.SetActive(false);// to be setActive on new round
                 }
 
                 //toggle buttons and text to original state
@@ -235,7 +227,6 @@ public class PlayerController : MonoBehaviour
                 allInButton.SetActive(false);
 
                 hand.Raise(raiseAmount);
-                // do something
                 gc.EndPlayerTurn(); 
             }
         }
