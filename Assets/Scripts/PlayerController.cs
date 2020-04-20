@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
 
             if (!raiseClicked)
             {
-                if (hand.totalBet == gc.lastBet)
+                if (hand.totalBet >= gc.lastBet)
                 {
                     callButton.SetActive(false);
                     checkButton.SetActive(true);
@@ -102,6 +102,9 @@ public class PlayerController : MonoBehaviour
 
     public void RaiseClicked()
     {
+        if (gc.gState != GameState.PlayerTurn)
+            return;
+
         if(hand.bank < gc.lastBet)
         {
             if (!allInButton.activeSelf)

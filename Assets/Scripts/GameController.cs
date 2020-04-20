@@ -9,6 +9,7 @@ public enum GameState { Processing, Start, PlayerTurn, AITurn, Showdown, End};
 public class GameController : MonoBehaviour
 {
     public GameObject menuPanel;
+    public GameObject gameOverPanel;
 
     public List<string> deck;
     public int currentTopDeck = 0;
@@ -41,6 +42,8 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameOverPanel.SetActive(false);
+        menuPanel.SetActive(false);
         potText.GetComponent<Text>().text = "Pot Total: $" + potTotal;
         blindsText.GetComponent<Text>().text = "Blinds: $" + blinds + " / $" + (blinds * 2);
         ChangeState(GameState.Start);
@@ -227,7 +230,7 @@ public class GameController : MonoBehaviour
         int bet = players[0].totalBet;
         foreach (Hand h in players)
         {
-            if (h.totalBet != bet || !h.acted)
+            if (h.bank > 0 && (h.totalBet != bet || !h.acted))
                 allBet = false;
         }
 
@@ -357,9 +360,10 @@ public class GameController : MonoBehaviour
         ChangeState(GameState.Processing);
         foreach (Hand h in players)
         {
-            if (h.bank <= 100)
+            if (h.bank <= 0)
             {
                 Debug.Log(h.gameObject.name + "lost!");
+                StartCoroutine(GameOver());
                 return;
             }
         }
@@ -375,6 +379,12 @@ public class GameController : MonoBehaviour
             h.ClearHand();
         }
         table.Clear();
+    }
+
+    IEnumerator GameOver()
+    {
+        yield return new WaitForSeconds(2.0f);
+        gameOverPanel.SetActive(true);
     }
 
     //////////////////////////////
